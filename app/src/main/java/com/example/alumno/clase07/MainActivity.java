@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements Handler.Callback {
 
+    private ImageView img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        
 
         //Handler
         Handler h = new Handler(this);
@@ -33,14 +35,15 @@ public class MainActivity extends AppCompatActivity implements Handler.Callback 
 
     @Override
     public boolean handleMessage(Message msg) {
-        ImageView img = (ImageView) findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.img);
 
         Toast.makeText(this,"hola",Toast.LENGTH_SHORT).show();
-        //Log.d("Respuesta", "llego respuesta");
 
 
+        byte[] bytes = (byte[]) msg.obj;
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        img.setImageBitmap(bitmap);
 
-        img.setImageBitmap(msg.obj);
         return true;
     }
 }
